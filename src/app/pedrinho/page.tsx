@@ -1,28 +1,44 @@
+"use client";
+
+import { TextField, Button } from "@mui/material";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+
 export default function pedro() {
+  const { register, handleSubmit } = useForm();
+
+  async function onSubmit(data: any) {
+    const res = await axios.post("/api/user", data);
+  }
+
   return (
     <main>
       <form
         style={{ display: "flex", flexDirection: "column", padding: "5px" }}
+        onSubmit={handleSubmit(onSubmit)}
       >
-        <label style={{ margin: "5px" }}>
-          Nome:
-          <input type="text" name="name" />
-        </label>
-        <label style={{ margin: "5px" }}>
-          E-mail:
-          <input type="text" name="email" />
-        </label>
-        <label style={{ margin: "5px" }}>
-          E-senha:
-          <input type="password" name="senha" />
-        </label>
-        <button
-          className="button-submit"
-          style={{ margin: "5px", width: "100px", height: "30px" }}
-          type="submit"
-        >
+        <TextField
+          label="nome"
+          sx={{ width: "350px", margin: "5px" }}
+          size="small"
+          {...register("name")}
+        />
+        <TextField
+          label="email"
+          sx={{ width: "350px", margin: "5px" }}
+          size="small"
+          {...register("email")}
+        />
+        <TextField
+          label="senha"
+          type="password"
+          sx={{ width: "350px", margin: "5px" }}
+          size="small"
+          {...register("password")}
+        />
+        <Button type="submit" sx={{ width: "350px", margin: "5px" }}>
           Enviar
-        </button>
+        </Button>
       </form>
     </main>
   );
