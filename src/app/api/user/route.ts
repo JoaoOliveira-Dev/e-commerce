@@ -1,6 +1,5 @@
 import prisma from "@/lib/prima";
 import { NextRequest, NextResponse } from "next/server";
-import { redirect } from "next/navigation";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();

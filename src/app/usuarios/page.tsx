@@ -4,6 +4,14 @@ async function getUsers() {
   return await prisma.user.findMany();
 }
 
+async function getUserById() {
+  return await prisma.user.findUnique({
+    where: {
+      id: 1,
+    },
+  });
+}
+
 export default async function usuarios() {
   const users = await getUsers();
 
@@ -14,9 +22,9 @@ export default async function usuarios() {
           key={index}
           style={{ margin: "5px", display: "flex", flexDirection: "column" }}
         >
-          <span>{user.name}</span>
-          <span>{user.email}</span>
-          <span>{user.password}</span>
+          <span>{user?.name}</span>
+          <span>{user?.email}</span>
+          <span>{user?.password}</span>
         </div>
       ))}
     </main>
