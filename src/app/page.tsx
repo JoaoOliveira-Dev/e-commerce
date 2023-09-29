@@ -1,13 +1,9 @@
-"use client";
-
-import { useState } from "react";
+import Nav from "../components/header/nav";
 
 export default function Home() {
-  const [count, setCount] = useState(0);
-
   return (
     <main>
-      <button onClick={() => setCount(count + 1)}>{count}</button>
+      <Nav />
     </main>
   );
 }

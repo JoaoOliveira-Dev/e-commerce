@@ -1,0 +1,103 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 10vh;
+  z-index: 1;
+
+  padding: 0 1rem;
+
+  background-color: #fff;
+
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
+  border: #00000041 1px solid;
+  border-radius: 5px;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-between;
+
+  align-items: center;
+
+  width: 100%;
+
+  margin: 200px;
+}
+
+nav ul li {
+  list-style: none;
+}
+
+nav ul li a {
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+
+  color: #000;
+
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: #ff0000;
+}
+
+nav ul li a .logo {
+  width: 150px;
+  height: 87px;
+
+  object-fit: cover;
+  font-size: 1.5rem;
+  font-weight: 600;
+
+  color: #000;
+
+  border-radius: 5px;
+}
+
+nav ul li input {
+  width: 500px;
+
+  padding: 0.5rem 1rem;
+
+  border: none;
+}
+
+nav ul li input:focus {
+  outline: none;
+}
+
+nav ul li .search {
+  width: 45px;
+  height: 35px;
+
+  margin-left: 10px;
+
+  border: none;
+
+  background-color: transparent;
+}
+
+nav ul li .search:hover {
+  cursor: pointer;
+}
+
+nav ul .search-box {
+  border-bottom: #00000041 1px solid;
+  border-radius: 5px;
+}
+
+nav ul li .cart {
+  margin-right: 10px;
+}
+
+nav ul li .cart-box {
+  margin-right: 10px;
+}
+
+nav ul li .user {
+  margin-right: 10px;
+}
