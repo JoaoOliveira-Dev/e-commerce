@@ -1,3 +1,7 @@
+body {
+  background-color: #8f8f8f1f;
+}
+
 nav {
   display: flex;
   justify-content: space-between;
@@ -12,7 +16,7 @@ nav {
 
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
   border: #00000041 1px solid;
-  border-radius: 5px;
+  border-radius: 7px;
 }
 
 nav ul {

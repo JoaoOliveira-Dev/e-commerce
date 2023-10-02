@@ -1,8 +1,11 @@
-import "./nav.css";
 import Image from "next/image";
-import logo from "../../assets/logo.png";
+import Link from "next/link";
+
 import { BiUser } from "react-icons/bi";
 import { BsCart3, BsSearch } from "react-icons/bs";
+
+import logo from "../../assets/logo.png";
+import "./nav.css";
 
 export default function Nav() {
   return (
@@ -29,10 +32,10 @@ export default function Nav() {
           </a>
         </li>
         <li>
-          <a href="">
+          <Link href="/login" className="link">
             <BiUser className="user" />
             <b>Entre</b> ou <b>Cadastre-se</b>
-          </a>
+          </Link>
         </li>
       </ul>
     </nav>
