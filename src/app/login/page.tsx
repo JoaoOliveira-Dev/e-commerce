@@ -5,7 +5,7 @@ import background from "../../assets/background.jpg";
 export default function login() {
   return (
     <main>
-      <Image className="background-image" src={background} alt="Background" />
+      {/* <Image className="background-image" src={background} alt="Background" /> */}
       <Login />
     </main>
   );

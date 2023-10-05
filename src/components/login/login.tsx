@@ -1,3 +1,5 @@
+"use client";
+
 import "./login.css";
 
 import Image from "next/image";
@@ -25,8 +27,13 @@ export default function Login() {
           <span>Lembrar-me</span>
         </div>
         <div className="box-buttons">
-          <button className="login-button">Entrar</button>
-          <button className="conta-button">Crie uma conta</button>
+          <button type="submit" className="login-button">
+            Entrar
+          </button>
+          {/* <button className="conta-button">Crie uma conta</button> */}
+          <Link href="/registrar" className="conta-button">
+            Ainda não possui uma conta ? Registre aqui
+          </Link>
         </div>
       </form>
     </div>
