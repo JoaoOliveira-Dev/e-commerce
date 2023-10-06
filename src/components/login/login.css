@@ -121,17 +121,17 @@ form {
   text-decoration-color: none;
 }
 
-.email-box {
+.login-box .email-box {
   width: 95%;
 
   margin-top: 20%;
 }
 
-.password-box {
+.login-box .password-box {
   width: 95%;
 }
 
-.login-button:hover {
+.login-box .login-button:hover {
   color: #000;
 
   background-color: #ffffff;

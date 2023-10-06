@@ -19,10 +19,12 @@ export default function Registrar() {
 
   async function onSubmit(data: any) {
     const res = await axios.post("/api/user/create", data);
+
+    console.log(res);
   }
 
   return (
-    <main className="login-box">
+    <main className="registrar-box">
       <Link href="/">
         <Image className="logo" src={logo} alt="Logo" />
       </Link>

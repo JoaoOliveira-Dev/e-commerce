@@ -41,7 +41,7 @@ export default function pedro() {
     resolver: zodResolver(createUserSchema),
   });
 
-  async function onSubmit(data: any) {
+  async function onSubmit(data: CreateUser) {
     const res = await axios.post("/api/user", data);
   }
 
