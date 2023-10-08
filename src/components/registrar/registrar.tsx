@@ -9,19 +9,34 @@ import "./registrar.css";
 import logo from "../../assets/logo.png";
 
 import axios from "axios";
+import Input from "../shared/input/input";
+import { z } from "zod";
+import { createUserSchema } from "@/lib/validations/user";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+
+type CreateUser = z.infer<typeof createUserSchema>;
 
 export default function Registrar() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<CreateUser>({
+    resolver: zodResolver(createUserSchema),
+  });
 
   async function onSubmit(data: any) {
-    const res = await axios.post("/api/user/create", data);
+    const res = await axios.post("/api/user/create", data, {
+      validateStatus: () => true,
+    });
 
-    console.log(res);
+    console.log("ausduyg", res.data);
   }
+
+  useEffect(() => {
+    console.log(errors);
+  }, [errors]);
 
   return (
     <main className="registrar-box">
@@ -30,23 +45,36 @@ export default function Registrar() {
       </Link>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="name-box">
-          <input type="text" placeholder="Nome" {...register("name")} />
+          <Input
+            type="text"
+            placeholder="Nome"
+            {...register("name")}
+            error={!!errors.name}
+          />
+          {errors.name && <p>{errors.name.message}</p>}
         </div>
         <div className="email-box">
-          <input type="text" placeholder="Email" {...register("email")} />
+          <Input
+            type="text"
+            placeholder="Email"
+            {...register("email")}
+            error={!!errors.email}
+          />
         </div>
         <div className="password-box">
-          <input
+          <Input
             type="password"
             placeholder="Senha"
             {...register("password")}
+            error={!!errors.password}
           />
         </div>
         <div className="confirm-box">
-          <input
+          <Input
             type="password"
             placeholder="Confirme sua senha"
             {...register("confirmPassword")}
+            error={!!errors.confirmPassword}
           />
         </div>
         <div className="box-buttons">
