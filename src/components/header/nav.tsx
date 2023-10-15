@@ -9,7 +9,7 @@ import "./nav.css";
 
 export default function Nav() {
   return (
-    <nav>
+    <nav className="nav-bar">
       <ul>
         <li>
           <a href="">

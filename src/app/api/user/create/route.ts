@@ -1,47 +1,79 @@
 import prisma from "@/lib/prima";
 import { createUserSchema } from "@/lib/validations/user";
+import { hash } from "bcrypt";
 
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const name = body.name;
-  const email = body.email;
-  const password = body.password;
-  const confirmPassword = body.confirmPassword;
+  try {
+    const body = await req.json();
+    const name = body.name;
+    const email = body.email;
+    const password = body.password;
+    const confirmPassword = body.confirmPassword;
 
-  const validatedUserInput = createUserSchema.safeParse({
-    name,
-    email,
-    password,
-    confirmPassword,
-  });
+    const validatedUserInput = createUserSchema.safeParse({
+      name,
+      email,
+      password,
+      confirmPassword,
+    });
 
-  if (!validatedUserInput.success) {
+    if (!validatedUserInput.success) {
+      return NextResponse.json(
+        {
+          field: validatedUserInput.error.issues[0].path[0],
+          message: validatedUserInput.error.issues[0].message,
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
+    const verifyEmail = await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (verifyEmail) {
+      return NextResponse.json(
+        {
+          field: "email",
+          message: "Email já cadastrado!",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
+    const hashedPassword = await hash(password, 10);
+
+    const ret = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+      },
+    });
+
+    const { password: newUserPassword, ...user } = ret;
+
+    return NextResponse.json({
+      user: user,
+      message: "Usuário criado com sucesso!",
+      status: 200,
+    });
+  } catch (error) {
     return NextResponse.json(
       {
-        field: validatedUserInput.error.issues[0].path[0],
-        message: validatedUserInput.error.issues[0].message,
+        message: "Algo deu errado",
       },
       {
-        status: 400,
+        status: 500,
       }
     );
   }
-
-  /* if(validatedSchema.success) validatedSchema.data.name */
-
-  // if (!body.name || !body.email || !body.password) {
-  //   return NextResponse.json({ error: "Missing fields" }, { status: 400 });
-  // }
-
-  // const user = await prisma.user.create({
-  //   data: {
-  //     name: body.name,
-  //     email: body.email,
-  //     password: body.password,
-  //   },
-  // });
-
-  // return NextResponse.json({ user }, { status: 200 });
 }

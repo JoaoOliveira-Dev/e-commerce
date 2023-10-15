@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 
 import "./registrar.css";
 import logo from "../../assets/logo.png";
@@ -13,7 +14,7 @@ import Input from "../shared/input/input";
 import { z } from "zod";
 import { createUserSchema } from "@/lib/validations/user";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { redirect } from "next/navigation";
 
 type CreateUser = z.infer<typeof createUserSchema>;
 
@@ -26,17 +27,23 @@ export default function Registrar() {
     resolver: zodResolver(createUserSchema),
   });
 
+  const [error, setError] = useState("");
+
   async function onSubmit(data: any) {
+    setError("");
     const res = await axios.post("/api/user/create", data, {
       validateStatus: () => true,
     });
 
-    console.log("ausduyg", res.data);
-  }
+    console.log(res);
 
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
+    if (res.status === 400) {
+      setError(res.data.message);
+    }
+    if (res.status === 200) {
+      redirect("/login");
+    }
+  }
 
   return (
     <main className="registrar-box">
@@ -51,15 +58,26 @@ export default function Registrar() {
             {...register("name")}
             error={!!errors.name}
           />
-          {errors.name && <p>{errors.name.message}</p>}
+          {errors.name && (
+            <p style={{ display: "flex", justifyContent: "center" }}>
+              {errors.name.message}
+            </p>
+          )}
         </div>
         <div className="email-box">
           <Input
             type="text"
             placeholder="Email"
             {...register("email")}
-            error={!!errors.email}
+            error={!!errors.email || !!error}
           />
+          {errors.email ? (
+            <p style={{ display: "flex", justifyContent: "center" }}>
+              {errors.email.message}
+            </p>
+          ) : (
+            <p style={{ display: "flex", justifyContent: "center" }}>{error}</p>
+          )}
         </div>
         <div className="password-box">
           <Input
@@ -68,6 +86,11 @@ export default function Registrar() {
             {...register("password")}
             error={!!errors.password}
           />
+          {errors.password && (
+            <p style={{ display: "flex", justifyContent: "center" }}>
+              {errors.password.message}
+            </p>
+          )}
         </div>
         <div className="confirm-box">
           <Input
@@ -76,6 +99,11 @@ export default function Registrar() {
             {...register("confirmPassword")}
             error={!!errors.confirmPassword}
           />
+          {errors.confirmPassword && (
+            <p style={{ display: "flex", justifyContent: "center" }}>
+              As senhas não se coincidem
+            </p>
+          )}
         </div>
         <div className="box-buttons">
           <button className="login-button" type="submit">

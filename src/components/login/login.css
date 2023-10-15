@@ -27,7 +27,7 @@ form {
   z-index: 541230;
 }
 
-.logo {
+.login-box .logo {
   width: 150px;
   height: 87px;
 
@@ -83,7 +83,7 @@ form {
 
   margin: 5px;
 
-  font-size: 0.9rem;
+  font-size: 1rem;
 
   padding: 0 0.5rem;
 
