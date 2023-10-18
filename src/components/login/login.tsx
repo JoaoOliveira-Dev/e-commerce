@@ -4,27 +4,36 @@ import "./login.css";
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import logo from "../../assets/logo.png";
 import background from "../../assets/background.png";
 
-import { useForm } from "react-hook-form";
 import axios from "axios";
+import CheckBox from "../checkbox/checkbox";
+import { useState } from "react";
 
 export default function Login() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const [isChecked, setIsChecked] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  async function onSubmit(data: any) {
-    const ret = await axios.post("/api/user/login", data, {
-      validateStatus: () => true,
-    });
+  const { push } = useRouter();
 
-    console.log(ret.data);
-  }
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+    const ret = await axios.post(
+      "/api/user/login",
+      { email: email, password: password, isChecked: isChecked },
+      {
+        validateStatus: () => true,
+      }
+    );
+
+    if (ret.status === 200) {
+      push("/");
+    }
+  };
 
   return (
     <div className="login-box">
@@ -32,20 +41,27 @@ export default function Login() {
         <Image className="logo" src={logo} alt="Logo" />
       </Link>
       {/* <h1>Faça seu login</h1> */}
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={onSubmit}>
         <div className="email-box">
-          <input type="text" placeholder="Email" {...register("email")} />
+          <input
+            type="text"
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+          />
         </div>
         <div className="password-box">
           <input
             type="password"
             placeholder="Senha"
-            {...register("password")}
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
           />
         </div>
         <div className="remember-box">
-          <input type="checkbox" {...register("checkBox")} />
-          <span>Lembrar-me</span>
+          {/* <input type="checkbox" {...register("checkBox")} /> */}
+          <CheckBox onChange={() => setIsChecked(!isChecked)} />
+          <span>Lembrar-me {isChecked ? "true" : "false"}</span>
         </div>
         <div className="box-buttons">
           <button type="submit" className="login-button">

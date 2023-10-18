@@ -35,8 +35,6 @@ export default function Registrar() {
       validateStatus: () => true,
     });
 
-    console.log(res);
-
     if (res.status === 400) {
       setError(res.data.message);
     }

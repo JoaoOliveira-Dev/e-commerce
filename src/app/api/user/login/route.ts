@@ -5,14 +5,17 @@ import prisma from "@/lib/prima";
 
 import { sign } from "jsonwebtoken";
 import { serialize } from "cookie";
+import { COOKIE_NAME } from "@/constants";
+
 import { compare } from "bcrypt";
 
-const MAX_AGE = 60;
+// var MAX_AGE = 60 * 60 * 24;
 
 export async function POST(req: NextResponse) {
   const body = await req.json();
   const email = body.email;
   const password = body.password;
+  const isChecked = body.isChecked;
 
   const existAccount = await prisma.user.findUnique({
     where: {
@@ -30,11 +33,10 @@ export async function POST(req: NextResponse) {
 
   if (!isPasswordValid) {
     return new Response(JSON.stringify({ message: "User not found" }), {
-      status: 401,
+      status: 404,
     });
   }
 
-  // Não esquecer de chegar o .env
   const secret = process.env.JWT_SECRET || "";
 
   const token = sign(
@@ -43,16 +45,15 @@ export async function POST(req: NextResponse) {
     },
     secret,
     {
-      expiresIn: "1m",
+      expiresIn: isChecked ? "30d" : "1d",
     }
   );
 
-  const serealized = serialize("OutSiteJWT", token, {
+  const serialized = serialize(COOKIE_NAME, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
-    maxAge: MAX_AGE,
-    path: "/login",
+    maxAge: isChecked ? 60 * 60 * 24 * 30 : 60 * 60 * 24,
   });
 
   const response = {
@@ -61,30 +62,6 @@ export async function POST(req: NextResponse) {
 
   return new Response(JSON.stringify(response), {
     status: 200,
-    headers: { "Set-Cookie": serealized },
+    headers: { "Set-Cookie": serialized },
   });
 }
-
-// import express from "express";
-// import { authenticate } from "your-authentication-middleware";
-// import { generateToken } from "your-jwt-library";
-
-// const router = express.Router();
-
-// router.post("/login", async (req, res) => {
-//   const { email, password } = req.body;
-
-//   try {
-//     // Use your authentication middleware to verify the user's credentials
-//     const user = await authenticate(email, password);
-
-//     // If the user is authenticated, generate a JWT and send it back to the client
-//     const token = generateToken(user);
-//     res.json({ token });
-//   } catch (error) {
-//     // If the user is not authenticated, send an error response
-//     res.status(401).json({ message: "Invalid credentials" });
-//   }
-// });
-
-// export default router;

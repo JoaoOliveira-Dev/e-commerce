@@ -151,12 +151,15 @@ form {
   width: 50%;
   display: flex;
   align-items: center;
+  padding: 7px;
 
   margin-bottom: 15px;
 }
 
 .remember-box span {
   width: 50%;
+
+  padding-left: 5px;
 
   font-size: 0.8rem;
   font-weight: 500;
