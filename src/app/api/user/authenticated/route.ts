@@ -20,6 +20,10 @@ export async function GET() {
   try {
     verify(value, secret);
 
+    const verify_auth = verify(value, secret);
+
+    console.log("verify", verify_auth);
+
     const response = {
       user: "Authenticated!",
     };

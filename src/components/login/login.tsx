@@ -61,7 +61,7 @@ export default function Login() {
         <div className="remember-box">
           {/* <input type="checkbox" {...register("checkBox")} /> */}
           <CheckBox onChange={() => setIsChecked(!isChecked)} />
-          <span>Lembrar-me {isChecked ? "true" : "false"}</span>
+          <span>Lembrar-me </span>
         </div>
         <div className="box-buttons">
           <button type="submit" className="login-button">
