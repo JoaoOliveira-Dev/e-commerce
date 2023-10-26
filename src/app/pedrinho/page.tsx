@@ -32,7 +32,7 @@ const createUserSchema = z.object({
 
 type CreateUser = z.infer<typeof createUserSchema>;
 
-export default function pedro() {
+function pedro() {
   const {
     register,
     handleSubmit,
@@ -46,15 +46,7 @@ export default function pedro() {
   }
 
   return (
-    <main
-      style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        justifyContent: "center",
-        gap: "10px",
-      }}
-    >
+    <div>
       <form
         style={{
           display: "flex",
@@ -101,6 +93,8 @@ export default function pedro() {
           </Alert>
         )}
       </form>
-    </main>
+    </div>
   );
 }
+
+export default pedro;

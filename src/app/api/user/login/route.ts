@@ -1,17 +1,16 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
-import { Prisma } from "@prisma/client";
 import prisma from "@/lib/prima";
 
 import { sign } from "jsonwebtoken";
-import { serialize } from "cookie";
 import { COOKIE_NAME } from "@/constants";
 
 import { compare } from "bcrypt";
+import { cookies } from "next/headers";
 
 // var MAX_AGE = 60 * 60 * 24;
 
-export async function POST(req: NextResponse) {
+export async function POST(req: NextRequest) {
   const body = await req.json();
   const email = body.email;
   const password = body.password;
@@ -24,17 +23,23 @@ export async function POST(req: NextResponse) {
   });
 
   if (!existAccount) {
-    return new Response(JSON.stringify({ message: "User not found" }), {
-      status: 404,
-    });
+    return NextResponse.json(
+      { message: "User not found" },
+      {
+        status: 401,
+      }
+    );
   }
 
   const isPasswordValid = await compare(password, existAccount.password);
 
   if (!isPasswordValid) {
-    return new Response(JSON.stringify({ message: "User not found" }), {
-      status: 404,
-    });
+    return NextResponse.json(
+      { message: "User not found" },
+      {
+        status: 404,
+      }
+    );
   }
 
   const secret = process.env.JWT_SECRET || "";
@@ -49,19 +54,24 @@ export async function POST(req: NextResponse) {
     }
   );
 
-  const serialized = serialize(COOKIE_NAME, token, {
+  cookies().set(COOKIE_NAME, token, {
+    expires: isChecked
+      ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+      : new Date(Date.now() + 24 * 60 * 60 * 1000),
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-    maxAge: isChecked ? 60 * 60 * 24 * 30 : 60 * 60 * 24,
+    // secure: process.env.NODE_ENV === "production",
+    path: "/",
   });
 
-  const response = {
-    message: "Authenticated!",
-  };
+  if (email === process.env.EMAIL_ADMIN) {
+    return NextResponse.json({
+      message: "Is Admin",
+      status: 200,
+    });
+  }
 
-  return new Response(JSON.stringify(response), {
+  return NextResponse.json({
+    message: "Success",
     status: 200,
-    headers: { "Set-Cookie": serialized },
   });
 }

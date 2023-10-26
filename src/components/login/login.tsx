@@ -30,7 +30,9 @@ export default function Login() {
       }
     );
 
-    if (ret.status === 200) {
+    if (ret.status === 200 && ret.data.message === "Is Admin") {
+      push("/dashboard");
+    } else if (ret.status === 200) {
       push("/");
     }
   };

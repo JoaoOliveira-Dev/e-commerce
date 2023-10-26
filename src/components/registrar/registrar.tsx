@@ -14,7 +14,7 @@ import Input from "../shared/input/input";
 import { z } from "zod";
 import { createUserSchema } from "@/lib/validations/user";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type CreateUser = z.infer<typeof createUserSchema>;
 
@@ -26,6 +26,8 @@ export default function Registrar() {
   } = useForm<CreateUser>({
     resolver: zodResolver(createUserSchema),
   });
+
+  const { push } = useRouter();
 
   const [error, setError] = useState("");
 
@@ -39,7 +41,7 @@ export default function Registrar() {
       setError(res.data.message);
     }
     if (res.status === 200) {
-      redirect("/login");
+      push("/login");
     }
   }
 

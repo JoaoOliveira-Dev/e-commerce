@@ -6,6 +6,7 @@ import { BsCart3, BsSearch } from "react-icons/bs";
 
 import logo from "../../assets/logo.png";
 import "./nav.css";
+import Button_Search from "../search/button_search";
 
 export default function Nav() {
   return (
@@ -17,10 +18,7 @@ export default function Nav() {
           </a>
         </li>
         <li className="search-box">
-          <input
-            type="text"
-            placeholder="Buscar produtos, marcas e muito mais..."
-          />
+          <Button_Search />
           <button className="search">
             <BsSearch />
           </button>

@@ -16,7 +16,7 @@ export default function autenticadoLayout({
   children: React.ReactNode;
 }) {
   // const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const router = useRouter();
+  /*   const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -29,7 +29,7 @@ export default function autenticadoLayout({
 
       // setIsSuccess(true);
     })();
-  }, [router]);
+  }, [router]); */
 
   // if (!isSuccess) {
   //   return <p>loading...</p>;

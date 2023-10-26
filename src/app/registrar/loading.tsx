@@ -1,11 +1,15 @@
-import React from "react";
-
-import { Skeleton } from "@mui/material";
+import Loader from "@/components/loader/loader";
 
 export default function Loading() {
   return (
-    <div>
-      <Skeleton variant="rounded" width={600} height={600} animation="wave" />
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Loader />
     </div>
   );
 }

@@ -26,3 +26,24 @@
 .error {
   border: 1px solid red !important;
 }
+
+.inputCadastro {
+  border-radius: 7px;
+  border: 1px solid #6b6b6b65;
+
+  padding: 5px;
+  margin: 5px;
+
+  width: 90%;
+
+  font-size: 1.1rem;
+  font-weight: 100;
+  transition: 0.5s all;
+}
+
+.inputCadastro:focus {
+  outline: none;
+
+  box-shadow: 0 0 2px 1px #1e65ff;
+  border: 1px solid #b7b7bd;
+}

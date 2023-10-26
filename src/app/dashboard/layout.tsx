@@ -1,33 +1,51 @@
-"use client";
-
+import { verify_auth_admin } from "@/lib/autentica/autenticado";
 import BarNav from "@/components/dashboard/navdashboard";
-import { SideNav } from "@/components/navbardashboard/side-nav";
-import { useState } from "react";
-import { ThemeProvider } from "@mui/material/styles";
-import { createTheme } from "../../theme/index";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+// import { SideNav } from "@/components/navbardashboard/side-nav";
+// import { useState } from "react";
+// import { ThemeProvider } from "@mui/material/styles";
+// import { createTheme } from "../../theme/index";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [open, setOpen] = useState(true);
-  const theme = createTheme();
+  const cookieStore = cookies();
 
-  return (
-    <html lang="pt-BR">
-      <body>
-        <ThemeProvider theme={theme}>
-          {/* <BarNav /> */}
-          <SideNav
-            open={open}
-            onClose={() => {
-              setOpen(!open);
-            }}
-          />
+  verify_auth_admin(cookieStore);
+  // console.log("cookieStore", verify_auth_admin(cookieStore));
+  // const theme = createTheme();
+
+  if (verify_auth_admin(cookieStore)) {
+    return (
+      <html lang="pt-BR">
+        <body
+          style={{
+            display: "flex",
+
+            padding: "0",
+            margin: "0",
+
+            justifyContent: "center",
+            alignItems: "center",
+
+            height: "100vh",
+            width: "100vw",
+
+            backgroundColor: "#f8f9fa",
+          }}
+        >
+          {/* <ThemeProvider theme={theme}> */}
+          <BarNav />
+          {/* <SideNav open /> */}
           {children}
-        </ThemeProvider>
-      </body>
-    </html>
-  );
+          {/* </ThemeProvider> */}
+        </body>
+      </html>
+    );
+  } else {
+    redirect("/");
+  }
 }
