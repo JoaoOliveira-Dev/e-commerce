@@ -15,7 +15,7 @@ interface CadastroProps {
   threeinput?: boolean; // Nova propriedade para o título (opcional)
   fourinput?: boolean; // Nova propriedade para o título (opcional)
 
-  apiRoute?: string; // Nova propriedade para a rota da API
+  disable?: string; // Desabilitar cadastros
 }
 
 const Cadastro: React.FC<CadastroProps> = ({
@@ -27,6 +27,7 @@ const Cadastro: React.FC<CadastroProps> = ({
   twoinput,
   threeinput,
   fourinput,
+  disable,
 }) => {
   const inputHeight = () => {
     if (oneinput) return "170px";
@@ -42,6 +43,14 @@ const Cadastro: React.FC<CadastroProps> = ({
     if (threeinput) return "183px";
     if (fourinput) return "244px";
     return "500px"; // Padrão caso nenhuma propriedade seja fornecida
+  };
+
+  const desabilitarOpasidade = () => {
+    if (disable) return "0.5";
+  };
+
+  const desabilitarBotao = () => {
+    if (disable) return true;
   };
 
   return (
@@ -60,6 +69,7 @@ const Cadastro: React.FC<CadastroProps> = ({
           width: "70vw",
           height: inputHeight(),
           minHeight: minInputHeight(),
+          opacity: desabilitarOpasidade(),
 
           // border: "solid 1px black",
           borderRadius: "10px",
@@ -86,12 +96,18 @@ const Cadastro: React.FC<CadastroProps> = ({
             variant="contained"
             color="error"
             style={{ marginRight: "20px", flexDirection: "row-reverse" }}
+            disabled={desabilitarBotao()}
           >
             Cancelar
           </Button>
         )}
         {buttonSucess && (
-          <Button variant="contained" color="success" type="submit">
+          <Button
+            variant="contained"
+            color="success"
+            type="submit"
+            disabled={desabilitarBotao()}
+          >
             Adicionar
           </Button>
         )}

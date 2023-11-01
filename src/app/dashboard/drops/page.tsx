@@ -9,6 +9,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Input from "@/components/shared/input/input";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "@/components/loader/loader";
 
 import axios from "axios";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -17,6 +18,7 @@ import { storage } from "@/config/firebase";
 export default function Page() {
   const [name, setName] = useState("");
   const [file, setFile] = useState<File>();
+  const [loading, setLoading] = useState(false);
 
   const onFileChange = (files: any) => {
     if (!files) return;
@@ -32,6 +34,8 @@ export default function Page() {
         console.error("Nenhum arquivo selecionado.");
         return;
       }
+
+      setLoading(true);
 
       const storageRef = ref(storage, `images/${file.name}`);
 
@@ -78,6 +82,7 @@ export default function Page() {
 
           if (res.status === 200) {
             toast.success("Drop criado com sucesso! 🔥");
+            setLoading(false);
           } else {
             toast.error("Erro ao cadastrar drop! 😳");
           }
@@ -91,14 +96,29 @@ export default function Page() {
   };
 
   return (
-    <main>
+    <main
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <form onSubmit={onSubmit}>
         <Cadastro
           titulo="Cadastro de Novos Drops"
           buttonCancel
           buttonSucess
           oneinput
+          disable={loading ? "true" : ""}
         >
+          {loading && (
+            <Loader
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            />
+          )}
           <Grid container spacing={1}>
             <Grid xs={6} md={8} sm={8} item>
               <Input
@@ -107,6 +127,7 @@ export default function Page() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                disabled={loading}
               />
             </Grid>
             <Grid
@@ -145,6 +166,7 @@ export default function Page() {
                   type="file"
                   hidden
                   onChange={(files) => onFileChange(files.target.files)}
+                  disabled={loading}
                 />
               </Button>
             </Grid>
