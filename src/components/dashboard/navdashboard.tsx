@@ -74,11 +74,11 @@ export default function BarNav(...props: any) {
             Produtos
           </MenuItem>
           <MenuItem
-            component={<Link href="/dashboard/promocao" />}
+            component={<Link href="/dashboard/drops" />}
             icon={<BsTags />}
           >
             {" "}
-            Promoções
+            New Drops
           </MenuItem>
         </SubMenu>
 

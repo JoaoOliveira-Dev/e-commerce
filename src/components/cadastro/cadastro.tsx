@@ -1,16 +1,21 @@
 // Cadastro.tsx
 import { Button } from "@mui/material";
-import React, { ReactNode } from "react";
+import axios from "axios";
+import React, { ReactNode, useState, ChangeEvent, FormEvent } from "react";
 
 interface CadastroProps {
   children: ReactNode;
   titulo?: string; // Nova propriedade para o título (opcional)
-  buttonSucess?: boolean; // Nova propriedade para o título (opcional)
+
+  buttonSucess?: boolean; // Nova propriedade para o aparecer o botão de  (opcional)
   buttonCancel?: boolean; // Nova propriedade para o título (opcional)
+
   oneinput?: boolean; // Nova propriedade para o título (opcional)
   twoinput?: boolean; // Nova propriedade para o título (opcional)
   threeinput?: boolean; // Nova propriedade para o título (opcional)
   fourinput?: boolean; // Nova propriedade para o título (opcional)
+
+  apiRoute?: string; // Nova propriedade para a rota da API
 }
 
 const Cadastro: React.FC<CadastroProps> = ({
@@ -86,7 +91,7 @@ const Cadastro: React.FC<CadastroProps> = ({
           </Button>
         )}
         {buttonSucess && (
-          <Button variant="contained" color="success">
+          <Button variant="contained" color="success" type="submit">
             Adicionar
           </Button>
         )}

@@ -13,7 +13,7 @@ datasource db {
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
-  name      String?
+  name      String
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -34,8 +34,7 @@ model User {
 
 model Product {
   id          String    @id @default(uuid())
-  storeId     String    // Foreign Key to Store
-  store       Store     @relation( fields: [storeId], references: [id])
+  drop        NewDrop[]
   categoryId  String    // Foreign Key to Category
   category    Category  @relation( fields: [categoryId], references: [id])
   name        String
@@ -49,50 +48,30 @@ model Product {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
-  @@index([storeId])
   @@index([categoryId])
   @@index([sizeId])
 }
 
-model Store {
-  id              String    @id @default(uuid())
-  name            String
-  userId          String
-  billboards      Billboard[] 
-  categories      Category[] 
-  products        Product[]  
-  sizes           Size[]     
-  orders          Order[]     
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
-}
-
-model Billboard {
-  id          String @id @default(uuid())
-  storeId     String
-  store       Store @relation( fields: [storeId], references: [id])
-  label       String
-  imageUrl    String
-  categories  Category[]
+model NewDrop {
+  id          String   @id @default(uuid())
+  name        String
+  url         String
+  productId   String?   // Foreign Key to Product
+  product     Product?  @relation(fields: [productId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  @@index([storeId])
+  @@index([productId])
+
 }
 
 model Category {
   id          String      @id @default(uuid())
-  storeId     String      // Foreign Key to Store
-  store       Store       @relation( fields: [storeId], references: [id])
-  billboardId String      // Foreign Key to Billboard
-  billboard   Billboard   @relation(fields: [billboardId], references: [id])
   name        String
   products    Product[]   
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 
-  @@index([storeId])
-  @@index([billboardId])
 }
 
 model Image {
@@ -108,15 +87,12 @@ model Image {
 
 model Size {
   id          String    @id @default(uuid())
-  storeId     String    // Foreign Key to Store
-  store       Store     @relation( fields: [storeId], references: [id])
   name        String
   value       String
   products    Product[] // Relation to Product model
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
-  @@index([storeId])
 }
 
 // Intermediary for a many-to-many relationship
@@ -133,8 +109,6 @@ model OrderItem {
 
 model Order {
   id        String    @id @default(uuid())
-  storeId     String    // Foreign Key to Store
-  store       Store     @relation( fields: [storeId], references: [id])
   orderItems OrderItem[] // Relation to OrderItem model
   isPaid     Boolean   @default(false)
   phone      String    @default("")
@@ -142,5 +116,4 @@ model Order {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 
-  @@index([storeId])
 }

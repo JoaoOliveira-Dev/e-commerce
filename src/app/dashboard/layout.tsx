@@ -1,4 +1,4 @@
-import { verify_auth_admin } from "@/lib/autentica/autenticado";
+import { verify_auth_admin } from "@/lib/admin/autenticado";
 import BarNav from "@/components/dashboard/navdashboard";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";

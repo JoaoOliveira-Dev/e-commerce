@@ -30,55 +30,9 @@ export default function Page() {
     { label: "G", id: 4 },
     { label: "GG", id: 5 },
   ];
-  // const Item = styled(Paper)(({ theme }) => ({
-  //   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  //   ...theme.typography.body2,
-  //   padding: theme.spacing(1),
-  //   textAlign: "center",
-  //   color: theme.palette.text.secondary,
-  // }));
 
   return (
     <Cadastro titulo="Cadastro de Produtos" buttonSucess buttonCancel twoinput>
-      {/* <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <TextField
-          label="Nome do Produto"
-          required
-          style={{ width: "20vw", minWidth: "250px", height: "2vh" }}
-        />
-        <TextField
-          label="Preço do Produto"
-          required
-          style={{ width: "20vw", minWidth: "250px" }}
-        />
-      </div>
-      <div>
-        <InputLabel id="demo-simple-select-label">Tamanho</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          // value={age}
-          label="Age"
-          // onChange={handleChange}
-          style={{ width: "20vw", minWidth: "250px" }}
-        >
-          <MenuItem value={10}>PP</MenuItem>
-          <MenuItem value={20}>P</MenuItem>
-          <MenuItem value={30}>M</MenuItem>
-          <MenuItem value={30}>G</MenuItem>
-          <MenuItem value={30}>GG</MenuItem>
-        </Select>
-        <TextField
-          label="Nome do Produto"
-          required
-          style={{ width: "20vw", minWidth: "250px" }}
-        />
-      </div>
-      <TextField
-        label="Nome do Produto"
-        required
-        style={{ width: "20vw", minWidth: "250px" }}
-      /> */}
       <Grid container spacing={1}>
         <Grid
           xs={4}
@@ -94,6 +48,8 @@ export default function Page() {
         <Grid xs={5} md={4} sm={4} item>
           <Autocomplete
             disablePortal
+            style={{ marginTop: "16px" }}
+            size="small"
             options={optionCategories}
             renderInput={(params) => (
               <TextField {...params} label="Categoria" />
@@ -105,7 +61,8 @@ export default function Page() {
         </Grid>
         <Grid xs={5} md={4} sm={4} item>
           <Autocomplete
-            style={{ marginLeft: "5px" }}
+            style={{ width: "100%", marginTop: "16px" }}
+            size="small"
             disablePortal
             options={optionSizes}
             renderInput={(params) => <TextField {...params} label="Tamanho" />}
@@ -128,7 +85,7 @@ export default function Page() {
               width: "100%",
               minWidth: "140px",
               paddingLeft: "5px",
-              fontSize: "0.9rem",
+              fontSize: "14px",
               fontWeight: "600",
             }}
           >
