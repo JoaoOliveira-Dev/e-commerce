@@ -7,8 +7,10 @@ import { BsCart3, BsSearch } from "react-icons/bs";
 import logo from "../../assets/logo.png";
 import "./nav.css";
 import Button_Search from "../search/button_search";
+import axios from "axios";
+import { useEffect } from "react";
 
-export default function Nav() {
+const Nav = () => {
   return (
     <nav className="nav-bar">
       <ul>
@@ -38,4 +40,6 @@ export default function Nav() {
       </ul>
     </nav>
   );
-}
+};
+
+export default Nav;

@@ -2,6 +2,7 @@ import { verify_auth_admin } from "@/lib/admin/autenticado";
 import BarNav from "@/components/dashboard/navdashboard";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { COOKIE_NAME } from "@/constants";
 // import { SideNav } from "@/components/navbardashboard/side-nav";
 // import { useState } from "react";
 // import { ThemeProvider } from "@mui/material/styles";
@@ -12,7 +13,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = cookies();
+  const cookieStore = cookies().get(COOKIE_NAME)?.value;
 
   verify_auth_admin(cookieStore);
   // console.log("cookieStore", verify_auth_admin(cookieStore));

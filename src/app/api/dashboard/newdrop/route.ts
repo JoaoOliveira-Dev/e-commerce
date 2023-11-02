@@ -1,40 +1,49 @@
+import { COOKIE_NAME } from "@/constants";
+import { verify_auth_admin } from "@/lib/admin/autenticado";
 import prisma from "@/lib/prima";
+import { cookies } from "next/headers";
 
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  try {
-    const body = await req.json();
-    const name = body.name;
-    const url = body.url;
+  const token = cookies().get(COOKIE_NAME)?.value;
 
-    // console.log("body", body);
+  if (verify_auth_admin(token)) {
+    try {
+      const body = await req.json();
+      const name = body.name;
+      const url = body.url;
 
-    const ret = await prisma.newDrop.create({
-      data: {
-        name,
-        url,
-      },
-    });
+      // console.log("body", body);
 
-    console.log("ret", ret);
+      const ret = await prisma.newDrop.create({
+        data: {
+          name,
+          url,
+        },
+      });
 
-    return NextResponse.json(
-      {
-        message: "Drop criado com sucesso!",
-      },
-      {
-        status: 200,
-      }
-    );
-  } catch (error) {
-    return NextResponse.json(
-      {
-        message: "Algo deu errado" + error,
-      },
-      {
-        status: 500,
-      }
-    );
+      console.log("ret", ret);
+
+      return NextResponse.json(
+        {
+          message: "Drop criado com sucesso!",
+        },
+        {
+          status: 200,
+        }
+      );
+    } catch (error) {
+      return NextResponse.json(
+        {
+          message: "Algo deu errado" + error,
+        },
+        {
+          status: 500,
+        }
+      );
+    }
+  } else {
+    return NextResponse.json({ error: "Not authorized" }, { status: 401 });
   }
 }
