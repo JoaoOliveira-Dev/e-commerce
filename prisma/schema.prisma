@@ -34,40 +34,36 @@ model User {
 
 model Product {
   id          String    @id @default(uuid())
-  drop        NewDrop[]
   categoryId  String    // Foreign Key to Category
   category    Category  @relation( fields: [categoryId], references: [id])
   name        String
-  price       Decimal
+  price       Float
   isFeatured  Boolean   @default(false)
   isArchived  Boolean   @default(false)
-  sizeId      String    // Foreign Key to Size
-  size        Size      @relation(fields: [sizeId], references: [id])
+  size        String    @default("")
   images      Image[]   // Relation to Image model
   orderItems  OrderItem[]   // Relation to Order model
+  dropId      String?   // Foreign Key to NewDrop
+  NewDrop     NewDrop?  @relation(fields: [dropId], references: [id], onDelete: SetNull)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
   @@index([categoryId])
-  @@index([sizeId])
 }
 
 model NewDrop {
   id          String   @id @default(uuid())
   name        String
   url         String
-  productId   String?   // Foreign Key to Product
-  product     Product?  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  products    Product[] // Relation to Product model
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
-  @@index([productId])
 
 }
 
 model Category {
   id          String      @id @default(uuid())
-  name        String
+  name        String      @unique
   products    Product[]   
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
@@ -83,16 +79,6 @@ model Image {
   updatedAt   DateTime @updatedAt
 
   @@index([productId])
-}
-
-model Size {
-  id          String    @id @default(uuid())
-  name        String
-  value       String
-  products    Product[] // Relation to Product model
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
 }
 
 // Intermediary for a many-to-many relationship

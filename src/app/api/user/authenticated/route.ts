@@ -22,7 +22,7 @@ export async function GET() {
 
     const verify_auth = verify(value, secret);
 
-    console.log("verify", verify_auth);
+    // console.log("verify", verify_auth);
 
     const response = {
       user: "Authenticated!",

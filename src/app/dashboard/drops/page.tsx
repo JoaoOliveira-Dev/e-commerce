@@ -66,7 +66,7 @@ export default function Page() {
           // Handle successful uploads on complete
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           const url = await getDownloadURL(uploadTask.snapshot.ref);
-          console.log("File available at", url);
+          // console.log("File available at", url);
 
           const res = await axios.post(
             "/api/dashboard/newdrop",
@@ -75,7 +75,7 @@ export default function Page() {
               validateStatus: () => true,
             }
           );
-          console.log("response: ", res);
+          // console.log("response: ", res);
 
           setName("");
           setFile(undefined);
