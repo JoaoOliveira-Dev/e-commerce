@@ -3,7 +3,7 @@ import "./btndrop.css";
 const ButtonDrop = ({ ...props }) => {
   return (
     <button className="button" {...props}>
-      <p>Comprar agora</p>
+      <p>Ver Produtos</p>
     </button>
   );
 };

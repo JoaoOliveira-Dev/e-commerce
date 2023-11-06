@@ -1,10 +1,11 @@
 import Header from "@/components/header/header";
-import Nav from "../components/header/nav";
+import MainProducts from "../components/mainproducts/mainproducts";
 
-export default function Home() {
+export default function Page() {
   return (
     <main>
       <Header />
+      <MainProducts />
     </main>
   );
 }

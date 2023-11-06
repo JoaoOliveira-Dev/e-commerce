@@ -7,12 +7,10 @@ import { BsCart3, BsSearch } from "react-icons/bs";
 import logo from "../../assets/logo.png";
 import "./nav.css";
 import Button_Search from "../search/button_search";
-import axios from "axios";
-import { useEffect } from "react";
 
-const Nav = () => {
+const Nav = ({ ...props }) => {
   return (
-    <nav className="nav-bar">
+    <nav className="nav-bar" {...props}>
       <ul>
         <li>
           <a href="">
