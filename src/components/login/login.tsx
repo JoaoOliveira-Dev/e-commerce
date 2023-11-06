@@ -7,16 +7,19 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import logo from "../../assets/logo.png";
-import background from "../../assets/background.png";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import axios from "axios";
 import CheckBox from "../checkbox/checkbox";
 import { useState } from "react";
+import Input from "../shared/input/input";
 
 export default function Login() {
   const [isChecked, setIsChecked] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
 
   const { push } = useRouter();
 
@@ -34,6 +37,9 @@ export default function Login() {
       push("/dashboard");
     } else if (ret.status === 200) {
       push("/");
+    } else {
+      toast.error("Email ou senha incorretos");
+      setError(true);
     }
   };
 
@@ -45,19 +51,21 @@ export default function Login() {
       {/* <h1>Faça seu login</h1> */}
       <form onSubmit={onSubmit}>
         <div className="email-box">
-          <input
+          <Input
             type="text"
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
+            error={error}
           />
         </div>
         <div className="password-box">
-          <input
+          <Input
             type="password"
             placeholder="Senha"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
+            error={error}
           />
         </div>
         <div className="remember-box">
@@ -74,6 +82,7 @@ export default function Login() {
           </Link>
         </div>
       </form>
+      <ToastContainer />
     </div>
   );
 }
