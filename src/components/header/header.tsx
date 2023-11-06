@@ -6,7 +6,7 @@ import "./header.css";
 const Header = async () => {
   const drop = await prisma.newDrop.findUnique({
     where: {
-      id: "5807c446-f92e-49fe-a2fb-11e9aebc0a4f",
+      id: "58b46560-0cbe-4b37-8316-659e0429f48e",
     },
   });
 

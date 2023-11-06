@@ -1,10 +1,10 @@
 "use client";
 
-import { Prisma } from "@prisma/client";
 import axios from "axios";
 
 import { useEffect, useState } from "react";
 
+import LoadingProduct from "../loadingproduct/loading";
 import ButtonBuy from "../ButtonBuy/buttonbuy";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -122,7 +122,7 @@ const MainProducts = () => {
             </div>
           ))
         ) : (
-          <h1>Carregando...</h1>
+          <LoadingProduct />
         )}
       </div>
       <ToastContainer />
