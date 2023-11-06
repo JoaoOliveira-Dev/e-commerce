@@ -11,7 +11,7 @@ const Header = async () => {
   });
 
   return (
-    <div>
+    <div style={{ borderRadius: "10px" }}>
       <div>
         <Nav />
       </div>
@@ -23,9 +23,11 @@ const Header = async () => {
           alignItems: "center",
           margin: "auto",
           width: "98%",
-          borderRadius: "5px",
           height: "50vh",
           backgroundImage: `url(${drop?.url})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          borderRadius: "10px",
         }}
       >
         <div
@@ -36,7 +38,6 @@ const Header = async () => {
             alignItems: "center",
             width: "100%",
             backgroundColor: "rgba(0, 0, 0, 0.5)",
-            borderRadius: "5px",
             height: "100%",
           }}
         >
@@ -51,7 +52,7 @@ const Header = async () => {
               borderRadius: "5px",
             }}
           /> */}
-          <h1 style={{ color: "white" }}>{drop?.name}</h1>
+          <h1 style={{ color: "white" }}>Novo {drop?.name}!!</h1>
           <ButtonDrop />
         </div>
       </div>

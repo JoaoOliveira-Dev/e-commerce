@@ -82,7 +82,12 @@ export default function BarNav(...props: any) {
           </MenuItem>
         </SubMenu>
 
-        <MenuItem icon={<BsGraphUp />}>Relatórios</MenuItem>
+        <MenuItem
+          icon={<BsGraphUp />}
+          component={<Link href="/dashboard/relatorio" />}
+        >
+          Relatórios
+        </MenuItem>
 
         <SubMenu label="Configurações" icon={<BsGear />}>
           <MenuItem
